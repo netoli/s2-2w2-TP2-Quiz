@@ -1,0 +1,496 @@
+/* ======================== DÉLIMITATION & MISE EN FORME DE BASE GÉNÉRALE ========================  */
+*, ::after, ::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+html{
+    width: 100%;
+    height: 100%;
+    background: var(--bgBody);
+    font-size: 15px;
+    scroll-behavior: smooth;
+}
+
+/* ======================== MISE EN FORME SPÉCIFIQUE À CERTAINS ÉLÉMENTS ========================  */
+h1, div{
+    font-family: var(--typoTitre);
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+h1{
+    font-size: var(--fontSize2);
+    font-weight: 600;
+}
+h2, h4, label{
+    font-family: var(--typoAutreTexte);
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+label{
+    font-weight: 600;
+}
+input{
+    height: 24px;
+    border: none;
+}
+input[type="radio"]{
+    width: 1rem;
+    height: 1rem;
+}
+input:valid, textarea:valid, select:valid{
+    background-color: rgb(203, 246, 206);
+}
+input::placeholder, input[type="date"], textarea{
+    font-size: 12px;
+}
+textarea{
+    height: 10vh;
+    border: none;
+}
+
+/* ======================== VARIABLES DE PERSONNALISATION CSS ========================  */
+:root{
+    --typoTitre : "Kantumruy Pro", sans-serif ;
+    --typoAutreTexte : "Raleway", sans-serif;
+    --fontSize1 : clamp(3rem, 9vw, 12rem);
+    --fontSize2 : clamp(2rem, 3vw, 9rem);
+    --fontSize3 : clamp(1rem, 1.2vw, 9rem);
+    --fontSize4 : clamp(0.7rem, 1vw, 9rem);
+    --bgBody : rgb(220, 225, 251);
+    --bgFooter : rgb(0, 30, 204);
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+    --curseurEcrire : url('../images/curseur/write.png');
+    --curseurRadio : url('../images/curseur/press-button.png');
+    --curseurSelect : url('../images/curseur/click.png');
+    --curseurDate : url('../images/curseur/calendar.png');
+}
+
+
+/* ======================== GÉNÉRALISATION DU BODY & DU MAIN ========================  */
+body{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+main{
+    animation: transitionCercle 600ms cubic-bezier(.17,.14,.66,.97) both;
+}
+input{
+    font-size: 1rem;
+}
+
+
+/* ======================== L'ENTÊTE PAR DÉFAUT ========================  */
+header{
+    min-height: 15vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: var(--bgBody);
+    box-shadow: 2px 1px 6px black;
+    position: sticky;
+    top: 0;
+    z-index: 3;
+}
+#titre-devoir{
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    font-size: var(--fontSize2);
+}
+.cours, .prof{
+    margin-right: 30px;
+    font-weight: 300;
+    font-size: var(--fontSize3);
+}
+
+/* ======================== MAIN D'ACCUEIL ========================  */
+#accueil{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.bvn, .motQuestionnaire, .suite-bvn{
+    opacity: 0;
+}
+.bvn{
+    animation: versLeBas 2s ease-in-out forwards;
+    font-size: var(--fontSize2);
+}
+.motQuestionnaire{
+    display: flex;
+    animation: versLeBas 2.5s ease-in forwards, tourner 2.35s 75ms ease-in forwards;
+    font-weight: 900;
+    font-size: var(--fontSize1);
+}
+.suite-bvn{
+    animation: versLeHaut 3s cubic-bezier(0,.75,1,1.36) 4s 1 forwards;
+    font-size: var(--fontSize2);
+}
+
+
+/* ======================== MAIN DU FORMULAIRE ========================  */
+#formulaire{
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.identification, .genre, .naissance, .courriel, .description{
+    display: flex;
+    flex-direction: column;
+}
+.nom-prenom, .f-h{
+    display: flex;
+    align-items: center;
+}
+.nom-prenom > input, .courriel > input, .formation > input{
+    margin-right: 30px;
+    width: 100%;
+    caret-color: #8a2387;
+}
+.f-h div{
+    margin-right: 15px;
+}
+.naissance > input{
+    width: 120px;
+}
+.occupation > select, .niv-etude > select{
+    width: 150px;
+    height: 24px;
+    border: none;
+}
+
+
+/* ======================== MAIN DU QUESTIONNAIRE ========================  */
+#questionnaire{
+    flex-direction: column;
+    align-items: center;
+}
+#questionnaire input{
+    display: none;
+}
+#questionnaire .interrogation{
+    font-size: var(--fontSize3);
+    font-family: var(--typoAutreTexte);
+    font-weight: 500;
+}
+.question{
+    width: 75vw;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 1rem;
+}
+/* C'est pour sélectionner les questions sans image pour les mettre les réponses en colonne */
+.q2:nth-child(2) .lesReponses, .q5:nth-child(2) .lesReponses, .q7:nth-child(1) .lesReponses, .q9:nth-child(3) .lesReponses{
+    display: flex;
+    flex-direction: column;
+}
+.q1, .q2, .q3, .q4, .q5, .q6, .q7, .q8, .q9{
+    height: 40%;
+    background-color: whitesmoke;
+    filter: drop-shadow(0px 2px 2px black);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 1rem;
+    border-radius: 3px;
+    opacity: 0;
+    transform: translateX(0);
+    gap: 1rem;
+}
+.q1.visible, .q3.visible, .q5.visible, .q7.visible, .q9.visible{
+    animation: fondu-a-gauche 600ms ease-in forwards;
+}
+.q2.visible, .q4.visible, .q6.visible, .q8.visible{
+    animation: fondu-a-droite 600ms cubic-bezier(.4,.87,.66,.97) forwards;
+}
+.lesReponses{
+    display: flex;
+    gap: 20px;
+}
+.lesReponses div{
+    width: 100%;
+}
+.lesReponses label {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--typoAutreTexte);
+    font-size: var(--fontSize4);
+    font-weight: 200;
+}
+/* Ici, la couleur "skyblue" est appliquée au survol et reste quand c'est coché */
+.lesReponses label:hover,
+.lesReponses input:checked + img {
+    background-color: skyblue;
+}
+#questionnaire input[type="radio"]:checked + label {
+    background-color: rgb(53, 198, 255);
+}
+.lesReponses img {
+    width: 100%;
+    height: 18vh;
+    object-fit: cover;
+}
+.indication{
+    width: 45vw;
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 2px 2px 3px black;
+    border-radius: 3px;
+}
+.indication > h4{
+    font-size: var(--fontSize4);
+    font-family: var(--typoAutreTexte);
+    font-weight: 500;
+}
+
+
+/* ======================== PIED DE PAGE PAR DÉFAUT ========================  */
+footer{
+    min-height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bgFooter);
+    box-shadow: 2px 1px 6px black;
+}
+.bouton{
+    position: relative;
+    width: 12rem;
+    height: 4vh;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--fontSize3);
+    font-family: var(--typoAutreTexte);
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    transition: background-color 450ms ease-in-out, scale 450ms ease-in-out, color 450ms ease-in-out, font-weight 450ms ease;
+}
+.bouton:hover{
+    background-color: white;
+    text-transform: uppercase;
+    font-family: var(--typoAutreTexte);
+    font-weight: 600;
+    scale: 1.2;
+    color: black;
+}
+.bouton::before{
+    position: absolute;
+    content: "";
+    border-left: 6px solid white;
+    border-right: 6px solid white;
+    height: 100%;
+    right: 0;
+    left: 0;
+    transition: left 450ms ease-in, right 450ms ease-in;
+}
+.bouton:hover::before{
+    left: -6%;
+    right: -6%;
+}
+
+.inactif{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+/* ======================== LE CURSEUR PERSONNALISÉ POUR DIFFÉRENT MANIPULATION ========================  */
+.curseur {
+    position: fixed;
+    width: 1.5em;
+    height: 1.5rem;
+    border-radius: 50%;
+    background-color: #8a2387;
+    top: calc(var(--mouse-y));
+    left: calc(var(--mouse-x));
+    pointer-events: none;
+    will-change: top, left;
+    transition: width 0.25s, height 0.25s;
+    z-index: 100;
+}
+.formeCurseurBtn{
+    border: 3px solid white;
+    box-shadow: 0 0 6px 3px #f27121;
+    border-radius: 50%;
+}
+.formeCurseurBtnTerminer{
+    border: 6px double white;
+}
+.formeCurseurEcrire, .formeCurseurSelect, .formeCurseurRadio, .formeCurseurCalendrier{
+   background-color: transparent;
+    background-size: cover;
+    background-repeat: no-repeat;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+}
+.formeCurseurEcrire{
+    background-image: var(--curseurEcrire);
+}
+.formeCurseurRadio{
+   background-image: var(--curseurRadio);
+}
+.formeCurseurSelect{
+    background-image: var(--curseurSelect);
+}
+.formeCurseurCalendrier{
+    background-image: var(--curseurDate);
+}
+
+#reussite, #echec {
+    height: 100vh;
+    display: none;
+    padding: 2rem;
+    background-color: var(--bgBody);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    
+}
+
+#reussite h2, #echec h2 {
+    color: green;
+    font-family: var(--typoTitre);
+    font-size: var(--fontSize2);
+    font-weight: 600;
+}
+
+#echec h2 {
+    color: red;
+}
+
+#reussite p, #echec p {
+    color: green;
+    font-family: var(--typoAutreTexte);
+    font-size: var(--fontSize3);
+    font-weight: 300;
+}
+#echec p {
+    color: red;
+}
+
+
+/* C'est placé ici pour garder les mains caché avant un événement JS pour les affichés */
+#formulaire,
+#questionnaire,
+.btn-dbt-quiz,
+.btn-terminer,
+.btn-n-essaie {
+    display: none;
+}
+/* ======================== LES IMAGES CLÉS POUR LES ANIMATIONS ========================  */
+
+/* Ce sont les images clés pour la transition d'une page à une autre */
+@keyframes transitionCercle {
+  from {
+    clip-path: circle(0%);
+  }
+  to {
+    clip-path: circle(300%);
+  }
+}
+
+/* Ce sont les images clés pour les éléments de la page d'accueil */
+@keyframes versLeBas{
+    from{
+        transform: translateY(-300%);
+    }
+    to{
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+@keyframes versLeHaut{
+    from{
+        transform: translateY(300%);
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes tourner{
+    from{
+        transform: rotateX(-180deg);
+    }
+    to{
+        transform: rotateX(180deg);
+    }
+}
+
+/* Ce sont les images clés pour l'apparition des questions sur l'événement "scroll" */
+@keyframes fondu-a-gauche {
+    0% {
+        translate: -100%;
+        opacity: 0;
+    }
+
+    100% {
+        translate: 0%;
+        opacity: 1;
+    }
+}
+
+@keyframes fondu-a-droite {
+    0% {
+        translate: 100%;
+        opacity: 0;
+    }
+
+    100% {
+        translate: 0%;
+        opacity: 1;
+    }
+}
+
+
+/* ======================== VERSION MOBILE ========================  */
+/* Cette portion de code permet d'adapter l'entête en version mobile */
+@media (max-width: 576px){
+    header {
+        display: flex;
+        flex-direction: column;
+    }
+    #titre-devoir{
+        flex-grow: 0;
+    }
+    .q1 .lesReponses, .q3 .lesReponses, .q4 .lesReponses, .q6 .lesReponses, .q8 .lesReponses{
+        flex-direction: column;
+    }
+    .question{
+        margin-top: 1rem;
+    }
+    .lesReponses img {
+    height: 10vh;
+    }
+    .q1, .q3, .q4, .q6, .q8{
+        height: 66%;
+        gap: 1rem;
+    }
+}
+

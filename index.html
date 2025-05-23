@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP2_Vernet-Olivier</title>
+    
+    <!-- Fichier CSS -->
+     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Liens typographique -->
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <!-- C'est le Curseur personnalisé-->
+    <div class="curseur"></div>
+
+    <!-- Informations générales sur le TP2 -->
+    <header>
+        <h1 id="titre-devoir">TP2_Vernet-Olivier</h1>
+        <h2 class="cours">Cours : 582-2w2</h2>
+        <h2 class="prof">Prof : Vincent Leblanc</h2>
+    </header>
+
+    <!-- C'est la page d'accueil présentant le fond du devoir -->
+    <main id="accueil">
+        <h2 class="bvn">BIENVENUE au</h2>
+
+        <div class="motQuestionnaire titreMain"></div> 
+        <!-- Est généré depuis un tableau créé dans JS avec les lettres du mot questionnaire. -->
+
+        <h2 class="suite-bvn">de connaissance générale</h2>
+    </main>
+
+    <!-- C'est le formulaire à remplir par tout utilisateur qui veut compléter le questionnaire -->
+     <!-- L'attribut "required" valide le formulaire ou pas en cas d'entrer ou pas de valeur dans les espaces dédiés -->
+    <main id="formulaire">
+        <h1>Entrer vos informations</h1>
+        <div class="identification">
+            <h4>Entrer votre nom et votre prénom</h4>
+            <div class="nom-prenom">
+                <input type="text" id="nom" name="nom" placeholder="Nom" minlength="3" maxlength="30" required>
+                <input type="text" id="prenom" name="prenom" placeholder="Prénom" minlength="3" maxlength="30" required>
+            </div>
+        </div>
+
+        <!-- Ici, les choix sont faits avec input radio qui ont le même (name = "sexe"), ce qui permet de choisir qu'un seulement -->
+        <div class="genre">
+            <h4>Choisir votre sexe</h4>
+            <div class="f-h">
+                <div class="homme">
+                    <input type="radio" id="homme" name="sexe" required>
+                    <label for="homme">H</label>
+                </div>
+                <div class="femme">
+                    <input type="radio" id="femme" name="sexe"required>
+                    <label for="femme">F</label>
+                </div>
+                <div class="perso">
+                    <input type="radio" id="bi" name="sexe"required>
+                    <label for="bi">Bi</label>
+                </div>
+            </div>
+        </div>
+        <div class="naissance">
+            <label>Entrer votre date de naissance</label>
+            <input type="date" id="date-naissance" name="fete" min="1900-01-01" max="2015-12-31" required> 
+            <!-- Ici, min et max permet de calibrer la plage de date à laquelle le formulaire va être valider -->
+        </div>
+        <div class="courriel">
+            <label>Entrer votre courriel</label>
+            <input type="email" id="courriel" name="courriel" placeholder="sophie@example.com" minlength="15" maxlength="60" required>
+            <!-- Ici, min et max est pour le nombre de caractère pour valider une entré de valeur -->
+        </div>
+        <div class="occupation">
+            <label>Votre occupation actuelle:</label>
+            <select id="typesOccupation" name="typesOccupation" required>
+                <option selected="selected">Occupation</option>
+
+                <!-- Ici, "selected" est comme "checked" dans le cas, on veut garder un état coché par défaut sur un élément -->
+                <option>Étudiant</option>
+                <option>Professeur(e)</option>
+                <option>Technicien(ne)</option>
+                <option>Superviseur</option>
+            </select>
+        </div>
+        <div class="niv-etude">
+            <label>Votre niveau d'étude :</label>
+            <select id="etude" name="etude" required>
+                <option selected="selected">Niveau d'étude</option>
+                <option>Secondaire</option>
+                <option>DEP</option>
+                <option>DEC</option>
+                <option>Universitaire</option>
+            </select>
+        </div>
+        <div class="prog-etude">
+            <label>Votre programme d'étude</label>
+            <div class="formation">
+                <input type="text" id="prog-etude" name="prog-etude" placeholder="Programme d'étude" minlength="15" maxlength="60" required>
+                <!-- "placeholder" permet de faire afficher des instructions dans les espaces input de type: text, email, textarea, etc -->
+            </div>
+        </div>
+        <div class="description">
+            <label>Décrivez vous</label>
+            <textarea name="qui" id="qui" placeholder="Parlez nous un peu de vous (minimum 30 caractères)" minlength="30" maxlength="100" required></textarea>
+        </div>
+    </main>
+
+    <!-- C'est le questionnaire -->
+    <main id="questionnaire">
+        <h1>Questionnaire de culture générale.</h1>
+        <section class="question">
+            <div class="q1">
+                <h4 class="interrogation">Quel est le pays qui a pour devise: "L'union fait la force"?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <!-- L'image est placée dans le label afin de permettre qu'en cliquant sur l'image ou le text du label puisse cocher l'input radio -->
+                        <input type="radio" id="japon_q1" name="q1" value="a">
+                        <label for="japon_q1" class="identification">
+                            <img src="assets/images/pays/japon.jpg" alt="Drapeau du Japon">
+                            Japon
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="haiti_q1" name="q1" value="b">
+                        <label for="haiti_q1" class="identification">
+                            <img src="assets/images/pays/haiti.jpg" alt="Drapeau d'Haïti">
+                            Haïti
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="canada_q1" name="q1" value="c">
+                        <label for="canada_q1" class="identification">
+                            <img src="assets/images/pays/canada.jpg" alt="Drapeau du Canada">
+                            Canada
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="rdc_q1" name="q1" value="d">
+                        <label for="rdc_q1" class="identification">
+                            <img src="assets/images/pays/rdc.jpg" alt="Drapeau de la RDC">
+                            Congo
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="q2">
+                <h4 class="interrogation">À quelle date la première guerre mondiale à débuter?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="date1_q2" name="q2" value="a" >
+                        <label for="date1_q2">20 frévier 20014</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="date2_q2" name="q2" value="b" >
+                        <label for="date2_q2">18 novembre 1903</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="date3_q2" name="q2" value="c" >
+                        <label for="date3_q2">18 juillet 1914</label>
+                    </div>
+                                        <div>
+                        <input type="radio" id="date4_q2" name="q2" value="d" >
+                        <label for="date4_q2">28 juillet 1914</label>
+                    </div>
+                </div>
+            </div>
+            <div class="q3">
+                <h4 class="interrogation">Quel est le grand mamifère sur Terre?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="elephant_q3" name="q3" value="a">
+                        <label for="elephant_q3" class="identification">
+                            <img src="assets/images/animaux/elephant.jpg" alt="Un éléphant">
+                            Éléphant
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="oursB_q3" name="q3" value="b">
+                        <label for="oursB_q3" class="identification">
+                            <img src="assets/images/animaux/oursB.jpg" alt="Un ours blanc">
+                            Ours blanc
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="baleineB_q3" name="q3" value="c">
+                        <label for="baleineB_q3" class="identification">
+                            <img src="assets/images/animaux/baleineB.jpg" alt="Une baleine bleu">
+                            Baleine bleu
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="girafe_q3" name="q3" value="d">
+                        <label for="girafe_q3" class="identification">
+                            <img src="assets/images/animaux/girafes.jpg" alt="Un girafe">
+                            Girafe
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="question">
+            <div class="q4">
+                <h4 class="interrogation">Identifier le poisson le plus rapide au monde.</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="orque_q4" name="q4" value="a">
+                        <label for="orque_q4" class="identification">
+                            <img src="assets/images/animaux/orque.jpg" alt="Un orque">
+                            Orque
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="dauphin_q4" name="q4" value="b">
+                        <label for="dauphin_q4" class="identification">
+                            <img src="assets/images/animaux/dauphin.jpg" alt="Un dauphin">
+                            Dauphin
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="espadon_q4" name="q4" value="c">
+                        <label for="espadon_q4" class="identification">
+                            <img src="assets/images/animaux/espadon.jpg" alt="Un espadon">
+                            Espadon
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="requin_q4" name="q4" value="d">
+                        <label for="requin_q4" class="identification">
+                            <img src="assets/images/animaux/requinBlanc.jpg" alt="Un requin blanc">
+                            Requin blanc
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="q5">
+                <h4 class="interrogation">Quel est le mont la plus haute du monde?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="everest_q5" name="q5" value="a" >
+                        <label for="everest_q5">Everest</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="nicolas_q5" name="q5" value="b" >
+                        <label for="nicolas_q5">Saint-Nicolas</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="montblanc_q5" name="q5" value="c" >
+                        <label for="montblanc_q5">Mont Blanc</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="kilimandjaro_q5" name="q5" value="d" >
+                        <label for="kilimandjaro_q5">Kilimandjaro</label>
+                    </div>
+                </div>
+            </div>
+            <div class="q6">
+                <h4 class="interrogation">Qui était le tout premier minitre du Canada?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="macdonald_q6" name="q6" value="a">
+                        <label for="macdonald_q6" class="identification">
+                            <img src="assets/images/personnages/jhonMacdonald.jpg" alt="Jhon Macdonald">
+                            John A. Macdonald
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="laurier_q6" name="q6" value="b">
+                        <label for="laurier_q6" class="identification">
+                            <img src="assets/images/personnages/wilfridLaurier.jpg" alt="Wilfrid Laurier">
+                            Wilfrid Laurier
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="william_q6" name="q6" value="c">
+                        <label for="william_q6" class="identification">
+                            <img src="assets/images/personnages/williamMackenzie.jpg" alt="William Mackenzie King">
+                            William Lyon Mackenzie King
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="tupper_q6" name="q6" value="d">
+                        <label for="tupper_q6" class="identification">
+                            <img src="assets/images/personnages/charlesTupper.jpeg" alt="Charles Tupper">
+                            Charles Tupper
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="question">
+            <div class="q7">
+                <h4 class="interrogation">Combien de mililitre d'eau environ qu'il faut boire par jour?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="5000_q7" name="q7" value="a" >
+                        <label for="5000_q7">5000 ml</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="d1500_q7" name="q7" value="b" >
+                        <label for="1500_q7">1500 ml</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="800_q7" name="q7" value="c" >
+                        <label for="800_q7">800 ml</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="2500_q7" name="q7" value="d" >
+                        <label for="2500_q7">2500 ml</label>
+                    </div>
+                </div>
+            </div>
+            <div class="q8">
+                <h4 class="interrogation">Choisissez laquelle se trouve au Québec?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="bParis_q8" name="q8" value="a">
+                        <label for="bParis_q8" class="identification">
+                            <img src="assets/images/pays/paris.jpg" alt="Basilique en France">
+                            1
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="bEspagne_q8" name="q8" value="b">
+                        <label for="bEspagne_q8" class="identification">
+                            <img src="assets/images/pays/espagne.jpg" alt="Basilique en espagne">
+                            2
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="bQuebec_q8" name="q8" value="c">
+                        <label for="bQuebec_q8" class="identification">
+                            <img src="assets/images/pays/quebec.jpg" alt="Oratoire Saint-Joseph">
+                            3
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="angleterre_q8" name="q8" value="d">
+                        <label for="angleterre_q8" class="identification">
+                            <img src="assets/images/pays/angleterre.jpeg" alt="basilique en Angleterre">
+                            4
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="q9">
+                <h4 class="interrogation">Quel peuple qui est le pionier des mathématiques?</h4>
+                <div class="lesReponses">
+                    <div>
+                        <input type="radio" id="romains_q9" name="q9" value="a" >
+                        <label for="romains_Q9">Les romains</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="egyptien_q9" name="q9" value="b" >
+                        <label for="egyptien_q9">Les anciens egyptiens</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="arabes_q9" name="q9" value="c" >
+                        <label for="arabes_q9">Les arabes</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="francais_q9" name="q9" value="d" >
+                        <label for="francais_q9">Les français</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="indication">
+            <h4>Double clique sur <span>terminer</span> pour voir votre <span>résultats</span></h4>
+        </div>
+
+    </main>
+
+    <!-- C'est l'élément affiché en cas de réussite -->
+    <main id="reussite"></main>
+
+    <!-- C'est l'élément affiché en cas d'échec -->
+    <main id="echec"></main>
+    
+
+    <!-- C'est le footer qui contient les différents boutons permettant de changer de page -->
+    <footer>
+        <div class="bouton btn-enr">Identification</div>
+        <div class="bouton btn-dbt-quiz">Questionnaire</div>
+        <div class="bouton btn-terminer">Terminer</div>
+        <div class="bouton btn-n-essaie">Ressayer</div>
+    </footer>
+
+    <!-- C'est le Script permettant de manipuler le DOM -->
+    <script src="assets/js/index.js"></script>
+</body>
+</html>
