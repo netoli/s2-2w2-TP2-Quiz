@@ -1,4 +1,4 @@
 # TP2 - Questionnaire
 ## Auteur : Olivier Vernet
 ### github
-- github-page :  https://netoli.github.io/2w2-TP2-Quiz/
+- github-page :  https://netoli.github.io/s2-2w2-TP2-Quiz/
