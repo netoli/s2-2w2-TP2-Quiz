@@ -80,9 +80,11 @@ body{
     height: 100%;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-attachment: fixed;
 }
 main{
     animation: transitionCercle 600ms cubic-bezier(.17,.14,.66,.97) both;
@@ -99,8 +101,11 @@ header{
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
-    background-color: var(--bgBody);
-    box-shadow: 2px 1px 6px black;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 3;
@@ -110,11 +115,15 @@ header{
     justify-content: center;
     flex-grow: 1;
     font-size: var(--fontSize2);
+    color: white;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 .cours, .prof{
     margin-right: 30px;
-    font-weight: 300;
+    font-weight: 400;
     font-size: var(--fontSize3);
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* ======================== MAIN D'ACCUEIL ========================  */
@@ -124,23 +133,48 @@ header{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+#accueil::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: pulse 15s ease-in-out infinite;
 }
 .bvn, .motQuestionnaire, .suite-bvn{
     opacity: 0;
+    position: relative;
+    z-index: 1;
 }
 .bvn{
     animation: versLeBas 2s ease-in-out forwards;
     font-size: var(--fontSize2);
+    color: white;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+    letter-spacing: 2px;
 }
 .motQuestionnaire{
     display: flex;
     animation: versLeBas 2.5s ease-in forwards, tourner 2.35s 75ms ease-in forwards;
     font-weight: 900;
     font-size: var(--fontSize1);
+    background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.5));
 }
 .suite-bvn{
     animation: versLeHaut 3s cubic-bezier(0,.75,1,1.36) 4s 1 forwards;
     font-size: var(--fontSize2);
+    color: white;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+    letter-spacing: 2px;
 }
 
 
@@ -154,16 +188,20 @@ header{
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,245,255,0.95) 100%);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 30, 204, 0.15);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 #formulaire > h1{
     text-align: center;
-    color: var(--bgFooter);
+    color: white;
     margin-bottom: 1rem;
     font-size: var(--fontSize2);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
 }
 .identification, .genre, .naissance, .courriel, .description, .occupation, .niv-etude, .prog-etude{
     display: flex;
@@ -171,15 +209,17 @@ header{
     gap: 0.75rem;
 }
 .identification h4, .genre h4{
-    color: #333;
+    color: white;
     font-size: 1.1rem;
     font-weight: 600;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 #formulaire label{
-    color: #333;
+    color: white;
     font-size: 1.05rem;
     font-weight: 600;
     margin-bottom: 0.3rem;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 .nom-prenom, .f-h{
     display: flex;
@@ -189,21 +229,24 @@ header{
 .nom-prenom > input, .courriel > input, .formation > input{
     width: 100%;
     padding: 0.75rem 1rem;
-    caret-color: #8a2387;
-    border: 2px solid #e0e5ff;
-    border-radius: 10px;
+    caret-color: #667eea;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
     font-size: 1rem;
     transition: all 0.3s ease;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
 }
 .nom-prenom > input:focus, .courriel > input:focus, .formation > input:focus{
     outline: none;
-    border-color: var(--bgFooter);
-    box-shadow: 0 0 0 3px rgba(0, 30, 204, 0.1);
+    border-color: white;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
     transform: translateY(-2px);
 }
 .nom-prenom > input:hover, .courriel > input:hover, .formation > input:hover{
-    border-color: #a0b0ff;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.95);
 }
 .f-h{
     display: flex;
@@ -215,22 +258,23 @@ header{
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.25rem;
-    background-color: white;
-    border: 2px solid #e0e5ff;
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 .f-h div:hover{
-    border-color: var(--bgFooter);
-    background-color: #f0f5ff;
+    border-color: white;
+    background: rgba(255, 255, 255, 1);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 30, 204, 0.15);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
 }
 .f-h input[type="radio"]{
     width: 1.2rem;
     height: 1.2rem;
-    accent-color: var(--bgFooter);
+    accent-color: #667eea;
     cursor: pointer;
 }
 .f-h label{
@@ -238,59 +282,68 @@ header{
     font-weight: 500;
     cursor: pointer;
     margin: 0;
+    color: #333;
 }
 .naissance > input{
     width: 200px;
     padding: 0.75rem 1rem;
-    border: 2px solid #e0e5ff;
-    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
     font-size: 1rem;
     transition: all 0.3s ease;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
 }
 .naissance > input:focus{
     outline: none;
-    border-color: var(--bgFooter);
-    box-shadow: 0 0 0 3px rgba(0, 30, 204, 0.1);
+    border-color: white;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
 }
 .occupation > select, .niv-etude > select{
     width: 100%;
     max-width: 300px;
     padding: 0.75rem 1rem;
     height: auto;
-    border: 2px solid #e0e5ff;
-    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
     font-size: 1rem;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
     transition: all 0.3s ease;
     cursor: pointer;
 }
 .occupation > select:focus, .niv-etude > select:focus{
     outline: none;
-    border-color: var(--bgFooter);
-    box-shadow: 0 0 0 3px rgba(0, 30, 204, 0.1);
+    border-color: white;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
 }
 .occupation > select:hover, .niv-etude > select:hover{
-    border-color: #a0b0ff;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.95);
 }
 textarea{
     padding: 1rem;
-    border: 2px solid #e0e5ff;
-    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
     font-family: var(--typoAutreTexte);
     font-size: 1rem;
     resize: vertical;
     min-height: 120px;
     transition: all 0.3s ease;
-    background-color: white;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
 }
 textarea:focus{
     outline: none;
-    border-color: var(--bgFooter);
-    box-shadow: 0 0 0 3px rgba(0, 30, 204, 0.1);
+    border-color: white;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
 }
 textarea:hover{
-    border-color: #a0b0ff;
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 
@@ -303,16 +356,20 @@ textarea:hover{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(240,245,255,0.95) 100%);
-    border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(0, 30, 204, 0.15);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 25px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 #questionnaire > h1{
     text-align: center;
-    color: var(--bgFooter);
+    color: white;
     margin-bottom: 2rem;
     font-size: var(--fontSize2);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
 }
 #questionnaire input{
     display: none;
@@ -321,7 +378,8 @@ textarea:hover{
     font-size: var(--fontSize3);
     font-family: var(--typoAutreTexte);
     font-weight: 600;
-    color: #333;
+    color: white;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     margin-bottom: 1rem;
 }
 .question{
@@ -338,21 +396,24 @@ textarea:hover{
     gap: 1rem;
 }
 .q1, .q2, .q3, .q4, .q5, .q6, .q7, .q8, .q9{
-    background: white;
-    border: 2px solid #e0e5ff;
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     opacity: 0;
     transform: translateX(0);
-    box-shadow: 0 4px 15px rgba(0, 30, 204, 0.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
 }
 .q1:hover, .q2:hover, .q3:hover, .q4:hover, .q5:hover, .q6:hover, .q7:hover, .q8:hover, .q9:hover{
-    box-shadow: 0 6px 20px rgba(0, 30, 204, 0.2);
-    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.5);
 }
 .q1.visible, .q3.visible, .q5.visible, .q7.visible, .q9.visible{
     animation: fondu-a-gauche 600ms ease-in forwards;
@@ -376,25 +437,29 @@ textarea:hover{
     font-family: var(--typoAutreTexte);
     font-size: var(--fontSize4);
     font-weight: 500;
-    background-color: #f8f9ff;
-    border: 2px solid #e0e5ff;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: 15px;
     transition: all 0.3s ease;
     cursor: pointer;
+    color: #333;
 }
 /* Ici, la couleur est appliquée au survol et quand c'est coché */
 .lesReponses label:hover{
-    background-color: #e0e9ff;
-    border-color: var(--bgFooter);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 30, 204, 0.2);
+    background: rgba(255, 255, 255, 0.95);
+    border-color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4);
 }
 #questionnaire input[type="radio"]:checked + label {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+    backdrop-filter: blur(15px);
     color: white;
-    border-color: #667eea;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-    transform: scale(1.02);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 30px rgba(102, 126, 234, 0.5);
+    transform: scale(1.03);
 }
 .lesReponses img {
     width: 100%;
@@ -414,14 +479,19 @@ textarea:hover{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 15px;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 18px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 .indication:hover{
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.4);
+    border-color: white;
 }
 .indication > h4{
     font-size: var(--fontSize4);
@@ -429,11 +499,13 @@ textarea:hover{
     font-weight: 500;
     color: white;
     text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 .indication > h4 span{
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: underline;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -443,51 +515,49 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--bgFooter);
-    box-shadow: 2px 1px 6px black;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.1);
 }
 .bouton{
     position: relative;
     width: 12rem;
-    height: 4vh;
-    background-color: black;
-    color: white;
+    min-height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    color: #667eea;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: var(--fontSize3);
     font-family: var(--typoAutreTexte);
     font-optical-sizing: auto;
-    font-weight: 300;
+    font-weight: 600;
     font-style: normal;
-    transition: background-color 450ms ease-in-out, scale 450ms ease-in-out, color 450ms ease-in-out, font-weight 450ms ease;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 .bouton:hover{
-    background-color: white;
-    text-transform: uppercase;
-    font-family: var(--typoAutreTexte);
-    font-weight: 600;
-    scale: 1.2;
-    color: black;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+    border-color: white;
 }
 .bouton::before{
-    position: absolute;
-    content: "";
-    border-left: 6px solid white;
-    border-right: 6px solid white;
-    height: 100%;
-    right: 0;
-    left: 0;
-    transition: left 450ms ease-in, right 450ms ease-in;
-}
-.bouton:hover::before{
-    left: -6%;
-    right: -6%;
+    display: none;
 }
 
 .inactif{
-    opacity: 0.5;
+    opacity: 0.4;
     pointer-events: none;
+    filter: grayscale(0.7);
 }
 
 
@@ -537,34 +607,65 @@ footer{
     height: 100vh;
     display: none;
     padding: 2rem;
-    background-color: var(--bgBody);
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     gap: 2rem;
-    
+    position: relative;
+}
+
+#reussite::before, #echec::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    opacity: 0.3;
+    z-index: 0;
+    animation: pulseResult 3s ease-in-out infinite;
+}
+
+#reussite::before {
+    background: radial-gradient(circle, rgba(76, 175, 80, 0.4) 0%, transparent 70%);
+}
+
+#echec::before {
+    background: radial-gradient(circle, rgba(244, 67, 54, 0.4) 0%, transparent 70%);
 }
 
 #reussite h2, #echec h2 {
-    color: green;
+    color: white;
     font-family: var(--typoTitre);
     font-size: var(--fontSize2);
-    font-weight: 600;
-}
-
-#echec h2 {
-    color: red;
+    font-weight: 700;
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 3rem;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 #reussite p, #echec p {
-    color: green;
+    color: white;
     font-family: var(--typoAutreTexte);
     font-size: var(--fontSize3);
-    font-weight: 300;
-}
-#echec p {
-    color: red;
+    font-weight: 400;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2.5rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 800px;
 }
 
 
@@ -641,6 +742,28 @@ footer{
     }
 }
 
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(1.1) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+@keyframes pulseResult {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.5;
+    }
+}
+
 
 /* ======================== VERSION MOBILE ========================  */
 /* Cette portion de code permet d'adapter l'entête en version mobile */
@@ -648,13 +771,28 @@ footer{
     header {
         display: flex;
         flex-direction: column;
+        padding: 1rem;
     }
     #titre-devoir{
         flex-grow: 0;
     }
+    .cours, .prof{
+        margin-right: 0;
+        text-align: center;
+    }
+    /* Page d'accueil responsive */
+    #accueil{
+        padding: 1rem;
+    }
+    .bvn, .suite-bvn{
+        font-size: 1.5rem;
+    }
+    .motQuestionnaire{
+        font-size: 3rem;
+    }
     /* Formulaire responsive */
     #formulaire{
-        width: 90%;
+        width: 95%;
         padding: 2rem 1.5rem;
         margin: 2rem auto;
     }
@@ -667,6 +805,7 @@ footer{
     }
     .f-h{
         gap: 1rem;
+        justify-content: center;
     }
     .f-h div{
         flex: 1;
@@ -709,6 +848,30 @@ footer{
     }
     .indication > h4{
         font-size: 0.9rem;
+    }
+    /* Footer responsive */
+    footer{
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 1.5rem 1rem;
+    }
+    .bouton{
+        width: 45%;
+        min-width: 120px;
+        font-size: 0.9rem;
+    }
+    /* Pages de résultats responsive */
+    #reussite h2, #echec h2{
+        font-size: 1.75rem;
+        padding: 1rem 2rem;
+    }
+    #reussite p, #echec p{
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+    }
+    #reussite::before, #echec::before{
+        width: 300px;
+        height: 300px;
     }
 }
 
