@@ -875,3 +875,77 @@ footer{
     }
 }
 
+
+/* ======================== A11Y, BOUTONS, FIELDSETS (ajouts R9 sprint) ========================  */
+/* Reset fieldset pour conserver l'apparence de <div> d'origine */
+fieldset{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+legend{
+    padding: 0;
+    display: block;
+    width: 100%;
+}
+legend > h4{
+    margin: 0;
+}
+
+/* Utilitaire pour les labels masqués visuellement mais lus par les lecteurs d'écran */
+.sr-only{
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* <button> : hériter la typo du parent pour que les règles .bouton (font-size, font-family via vars)
+   ne soient pas supplantées par les styles user-agent. On ne touche pas à border/background/color
+   — la classe .bouton les définit déjà. */
+button{
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+/* État désactivé (bouton "Questionnaire" tant que le formulaire n'est pas valide) */
+.bouton[aria-disabled="true"],
+.bouton.inactif{
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+/* Focus visible — indispensable pour navigation clavier */
+:focus-visible{
+    outline: 3px solid #ffd34d;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+input[type="radio"]:focus-visible + label,
+input[type="checkbox"]:focus-visible + label{
+    outline: 3px solid #ffd34d;
+    outline-offset: 3px;
+}
+
+/* A11y motrice : restaure le curseur natif si l'utilisateur demande moins d'animations */
+@media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+        cursor: auto !important;
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .curseur{ display: none !important; }
+}
+
+/* Sur écrans tactiles, le curseur custom n'a aucun sens : on le masque et on restaure le pointer natif */
+@media (pointer: coarse){
+    *, *::before, *::after{ cursor: auto !important; }
+    .curseur{ display: none !important; }
+}
