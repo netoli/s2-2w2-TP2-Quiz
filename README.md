@@ -8,7 +8,7 @@ Questionnaire interactif à 9 questions avec formulaire d'identification, systè
 
 ## Ce que le projet démontre
 
-- **JavaScript vanilla (ES2020+)** en module ES6 strict mode — pas de framework.
+- **JavaScript vanilla (ES2020+)** avec `'use strict';` et `defer` — pas de framework.
 - **Gestion d'état simple** : navigation multi-étapes (accueil → formulaire → questionnaire → résultat) via masquage/affichage de sections.
 - **Persistance locale** : `localStorage` pour sauvegarder les informations de l'utilisateur et les restaurer au rechargement.
 - **Animations CSS** : transition circulaire à l'arrivée sur chaque étape, fondus latéraux sur les questions révélées au scroll, curseur personnalisé suivant la souris via variables CSS.
@@ -21,7 +21,7 @@ Questionnaire interactif à 9 questions avec formulaire d'identification, systè
 |---|---|
 | Structure | HTML5 sémantique (`<main>`, `<section>`, `<fieldset>`, `<legend>`) |
 | Style | CSS3 (variables custom, `backdrop-filter`, `clamp()`, animations, media queries) |
-| Comportement | JavaScript ES2020+ en module (`type="module"`) |
+| Comportement | JavaScript ES2020+ avec `'use strict';` + `defer` |
 | Typographie | Google Fonts — Kantumruy Pro + Raleway (préchargées) |
 | Déploiement | GitHub Pages |
 
@@ -32,7 +32,7 @@ s2-2w2-TP2-Quiz-main/
 ├── index.html                 # structure sémantique + SEO/OG
 ├── assets/
 │   ├── css/style.css          # styles + variables + responsive + a11y
-│   ├── js/index.js            # module ES (navigation, validation, score, a11y)
+│   ├── js/index.js            # script classique `defer` + `'use strict';` (navigation, validation, score, a11y)
 │   ├── images/                # drapeaux, animaux, personnages, icônes curseur
 │   └── sons/                  # succes.mp3, echec.mp3
 └── README.md
@@ -58,7 +58,7 @@ Avant ce sprint, le projet était dans son état de remise scolaire. Améliorati
 - `<button type="button">` au lieu de `<div class="bouton">` (focusable au clavier, activable par Entrée/Espace).
 - Focus visible (`:focus-visible` avec outline contrasté).
 - Restauration du curseur natif sur tactile + `prefers-reduced-motion`.
-- JS converti en `type="module"` (strict mode), implicit global `uneLettre` corrigé, variable `sufaceGlobale` → `surfaceGlobale`.
+- JS en strict mode explicite (`'use strict';`) avec chargement `defer` — compatible `file://` sans serveur ; implicit global `uneLettre` corrigé, variable `sufaceGlobale` → `surfaceGlobale`.
 - Audio `preload="none"` + déverrouillage au premier geste.
 - Pré-remplissage du formulaire depuis `localStorage` au chargement.
 - Métadonnées SEO + Open Graph + `preconnect` Google Fonts + réduction à 2 familles (au lieu de 3).

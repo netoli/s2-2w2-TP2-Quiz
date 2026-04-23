@@ -2,9 +2,10 @@
  * @description Script principal — gère la navigation entre les étapes (accueil →
  * formulaire → questionnaire → résultat), la validation du formulaire, le calcul
  * du score, le curseur personnalisé et la persistance localStorage.
- * Exécuté comme module ES (defer + strict mode).
+ * Chargé avec defer ; strict mode activé par directive pour compatibilité file://.
  * @author Olivier Vernet
  */
+'use strict';
 
 // =============== SÉLECTION DES ÉLÉMENTS DU DOM ===============
 const surfaceGlobale = document.documentElement;
