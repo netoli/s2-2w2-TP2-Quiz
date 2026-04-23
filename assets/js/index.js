@@ -1,38 +1,56 @@
 /**
- * @description Ce ficier contient les déclencheurs d'événement permettant 
- * d'interagir avec le DOM, la sauvegarde de données et leurs manipulations
- * pour retouner une valeur en fonction de certaines conditions  
- * @author Vernet Olivier
+ * @description Script principal — gère la navigation entre les étapes (accueil →
+ * formulaire → questionnaire → résultat), la validation du formulaire, le calcul
+ * du score, le curseur personnalisé et la persistance localStorage.
+ * Exécuté comme module ES (defer + strict mode).
+ * @author Olivier Vernet
  */
 
-// ===============DÉCLARATION & SÉLECTIONS DES ÉLÉMENTS HTML===============
-// La surface de manipulation entière
-let sufaceGlobale = document.documentElement;
+// =============== SÉLECTION DES ÉLÉMENTS DU DOM ===============
+const surfaceGlobale = document.documentElement;
 
-// Les défférents mains qui s'afficheront
-let leMain1 = document.querySelector("#accueil");
-let leMain2 = document.querySelector("#formulaire");
-let leMain3 = document.querySelector("#questionnaire");
-let leMain4 = document.querySelector("#reussite");
-let leMain5 = document.querySelector("#echec");
+// Les étapes (sections) qui s'affichent tour à tour
+const leMain1 = document.querySelector("#accueil");
+const leMain2 = document.querySelector("#formulaire");
+const leMain3 = document.querySelector("#questionnaire");
+const leMain4 = document.querySelector("#reussite");
+const leMain5 = document.querySelector("#echec");
 
-// Les défférents boutons qui ont un écouteur d'événement
-let leBtnEnrInfos = document.querySelector("footer > .btn-enr");
-let leBtnDbtQuestionnaire = document.querySelector("footer > .btn-dbt-quiz");
-let leBtnTerminer = document.querySelector("footer > .btn-terminer");
-let leBtnRessayer = document.querySelector("footer > .btn-n-essaie");
+// Boutons du footer
+const leBtnEnrInfos = document.querySelector("footer > .btn-enr");
+const leBtnDbtQuestionnaire = document.querySelector("footer > .btn-dbt-quiz");
+const leBtnTerminer = document.querySelector("footer > .btn-terminer");
+const leBtnRessayer = document.querySelector("footer > .btn-n-essaie");
 
-// Le curseur personnalisé
-let leCurseur = document.querySelector(".curseur");
+// Curseur personnalisé (décoratif)
+const leCurseur = document.querySelector(".curseur");
 
-// Le tableau des réponses aux questions
+// Bonnes réponses (ordre q1..q9)
 const reponses = ["b", "d", "c", "c", "a", "a", "d", "c", "b"];
 
-// Le tableau des sources audio en cas de succès ou échec
+// Sons — preload="none" pour éviter de charger tant que l'utilisateur n'a pas terminé
 const audio = {
     succes: new Audio('assets/sons/succes.mp3'),
     echec: new Audio('assets/sons/echec.mp3')
 };
+audio.succes.preload = 'none';
+audio.echec.preload = 'none';
+
+// Les politiques modernes (Chrome, Safari) bloquent play() avant un geste utilisateur.
+// On déverrouille au premier clic : lecture silencieuse très courte, puis pause.
+let audioDeverrouille = false;
+function deverrouillerAudio() {
+    if (audioDeverrouille) return;
+    audioDeverrouille = true;
+    for (const son of [audio.succes, audio.echec]) {
+        son.muted = true;
+        son.play().then(() => { son.pause(); son.currentTime = 0; son.muted = false; }).catch(() => {
+            son.muted = false;
+        });
+    }
+}
+window.addEventListener('pointerdown', deverrouillerAudio, { once: true });
+window.addEventListener('keydown', deverrouillerAudio, { once: true });
 
 // Les éléments input pour une interaction différente avec le curseur personnalisé
 let lesInputsTxt = document.querySelectorAll('#formulaire input[type="text"], #formulaire input[type="email"], #formulaire textarea');
@@ -167,23 +185,16 @@ leBtnRessayer.addEventListener('dblclick', function(){
 })
 
 
-// On place le mot "QUESTIONNAIRE" lettre par lettre dans un div pour l'afficher dans
-// l'interface d'accueil avec un boucle "for"
-let divParLettre;
-const angleAleatoire = Math.random() * 90; 
-//Ici, c'est un nombre aléatoire qui sera donné sur 90,
-// pour servir d'angle par l'intermédiaire d'attribution de style css 
-// à un du DOM HTML
-for (uneLettre of "QUESTIONNAIRE"){
-	divParLettre = document.createElement("div");
-	divParLettre.innerHTML = uneLettre;
-	divParLettre.classList.add("motQuestionnaire");
-	divParLettre.style.animationDelay = Math.random() * 3 + "s"; 
-    //Ici, un délai aléatoire d'apparition est attribué à chaque élément du tableau "QUESTIONNAIRE"
+// Affichage lettre-par-lettre de "QUESTIONNAIRE" sur l'accueil (chaque lettre = div animé).
+// L'angle aléatoire de rotation est partagé pour garder la ligne cohérente visuellement.
+const angleAleatoire = Math.random() * 90;
+for (const uneLettre of "QUESTIONNAIRE") {
+    const divParLettre = document.createElement("div");
+    divParLettre.textContent = uneLettre;
+    divParLettre.classList.add("motQuestionnaire");
+    divParLettre.style.animationDelay = Math.random() * 3 + "s";
     divParLettre.style.transform = `rotate(${angleAleatoire}deg)`;
-    // C'est ici le nombre aléatoire se voit utiliser comme un angle
-	leMotQuestionnaire.append(divParLettre);
-    // Les divs créés pour chaque lettre seront un enfant de la portion donné dans le DOM
+    leMotQuestionnaire.append(divParLettre);
 }
 
 
@@ -256,8 +267,8 @@ function verifierFormulaireComplet() {
 function bougerCurseur(event) {
     // Modifiez les valeurs des propriétés personnalisées définis sur la racine 
     // du document HTML
-    sufaceGlobale.style.setProperty('--mouse-x', event.clientX + 'px');
-    sufaceGlobale.style.setProperty('--mouse-y', event.clientY + 'px');
+    surfaceGlobale.style.setProperty('--mouse-x', event.clientX + 'px');
+    surfaceGlobale.style.setProperty('--mouse-y', event.clientY + 'px');
 }
 
 
@@ -493,21 +504,55 @@ function afficherBtnTerminer() {
  * @returns void
  */
 function afficherResultat(prenom, nom, resultat) {
-    if (resultat >= 7) {
-        leMain4.innerHTML = `
-            <p>Votre score est de ${resultat}/9</p>
-            <h2>Félicitation ${prenom} ${nom}!!! Vous avez réussi.</h2>
-            <p>Double cliquer sur réessayer pour recommencer si vous voulez.</p>
-        `; //Le nom et le prénom récupéré dans la fonction enregistrerInfos() sont directement mis dans
-            //le texte affiché
-        leMain4.style.display = "flex";
-    } else {
-        leMain5.innerHTML = `
-            <p>Votre score est de ${resultat}/9</p>
-            <h2>Oups! Vous n'avez pas réussi ${prenom} ${nom}</h2>
-            <p>Double cliquer sur réessayer pour recommencer.</p>
-        `;
-        leMain5.style.display = "flex";
-    }
+    // textContent (pas innerHTML) pour éviter toute injection HTML via nom/prénom.
+    const cible = resultat >= 7 ? leMain4 : leMain5;
+
+    cible.replaceChildren();
+
+    const pScore = document.createElement('p');
+    pScore.textContent = `Votre score est de ${resultat}/9`;
+
+    const h2 = document.createElement('h2');
+    const nomComplet = [prenom, nom].filter(Boolean).join(' ') || 'Participant·e';
+    h2.textContent = resultat >= 7
+        ? `Félicitations ${nomComplet} ! Vous avez réussi.`
+        : `Oups ! Vous n'avez pas réussi, ${nomComplet}.`;
+
+    const pCta = document.createElement('p');
+    pCta.textContent = 'Double-cliquez sur « Réessayer » pour recommencer.';
+
+    cible.append(pScore, h2, pCta);
+    cible.style.display = 'flex';
 }
+
+// =============== PRÉ-REMPLISSAGE DU FORMULAIRE DEPUIS LOCALSTORAGE ===============
+// Si l'utilisateur a déjà complété le formulaire lors d'une session précédente,
+// on restaure les valeurs pour éviter de tout retaper.
+(function prefillFromLocalStorage() {
+    try {
+        const infos = JSON.parse(localStorage.getItem('infosUtilisateur'));
+        if (!infos) return;
+
+        const setVal = (sel, val) => {
+            const el = document.querySelector(sel);
+            if (el && typeof val === 'string' && val.length) el.value = val;
+        };
+        setVal('#nom', infos.nom);
+        setVal('#prenom', infos.prenom);
+        setVal('#date-naissance', infos.dateNaissance);
+        setVal('#courriel', infos.courriel);
+        setVal('#prog-etude', infos.programmeEtude);
+        setVal('#qui', infos.description);
+        if (infos.occupation) setVal('#typesOccupation', infos.occupation);
+        if (infos.niveauEtude) setVal('#etude', infos.niveauEtude);
+        if (infos.sexe) {
+            const r = document.getElementById(infos.sexe);
+            if (r) r.checked = true;
+        }
+        // Déclenche la validation pour activer le bouton "Questionnaire" si tout est rempli
+        verifierFormulaireComplet();
+    } catch (e) {
+        // localStorage corrompu ou indisponible — on ignore silencieusement
+    }
+})();
 
