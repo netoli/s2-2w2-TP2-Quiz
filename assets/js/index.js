@@ -179,10 +179,11 @@ leBtnRessayer.addEventListener('dblclick', function(){
     reinitialiseQuestionnaire();
     leBtnRessayer.style.display = 'none';
     leBtnTerminer.style.display = 'flex';
-    
-    document.querySelector('.q1').classList.add('visible');
-    document.querySelector('.q2').classList.add('visible');
-    document.querySelector('.q3').classList.add('visible');
+
+    // Même staggering qu'à l'apparition initiale (cf. afficherQuestionnaire).
+    setTimeout(() => document.querySelector('.q1').classList.add('visible'), 0);
+    setTimeout(() => document.querySelector('.q2').classList.add('visible'), 120);
+    setTimeout(() => document.querySelector('.q3').classList.add('visible'), 240);
 })
 
 
@@ -241,10 +242,15 @@ function verifierFormulaireComplet() {
     }
 
     // Active ou désactive le bouton
+    // Note : le CSS désactive via .inactif ET [aria-disabled="true"] (cf. style.css:922).
+    // Il faut donc synchroniser les deux — sinon aria-disabled="true" du HTML initial
+    // garde pointer-events: none même après retrait de .inactif → bouton non cliquable.
     if (champRempli) {
         leBtnDbtQuestionnaire.classList.remove('inactif');
+        leBtnDbtQuestionnaire.setAttribute('aria-disabled', 'false');
     } else {
         leBtnDbtQuestionnaire.classList.add('inactif');
+        leBtnDbtQuestionnaire.setAttribute('aria-disabled', 'true');
     }
 }
 
@@ -439,9 +445,11 @@ function afficherQuestionnaire() {
     leMain2.style.display = "none"; // on cache le formulaire
     leMain3.style.display = "flex"; // on affiche le questionnaire
 
-    document.querySelector('.q1').classList.add('visible');
-    document.querySelector('.q2').classList.add('visible');
-    document.querySelector('.q3').classList.add('visible');
+    // Staggering pour éviter le « cliquetis » de 3 animations simultanées
+    // avec courbes différentes (.q1/.q3 ease-in vs .q2 cubic-bezier).
+    setTimeout(() => document.querySelector('.q1').classList.add('visible'), 0);
+    setTimeout(() => document.querySelector('.q2').classList.add('visible'), 120);
+    setTimeout(() => document.querySelector('.q3').classList.add('visible'), 240);
 }
 
 /**
