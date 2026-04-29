@@ -276,6 +276,19 @@ header{
     transform: translateY(-2px);
     box-shadow: 0 5px 20px rgba(255, 255, 255, 0.3);
 }
+/* Feedback visuel fort à la sélection — sinon seul le rond bleu de la radio change. */
+.f-h div:has(input[type="radio"]:checked){
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.18);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+    transform: translateY(-2px);
+}
+/* Préfixé avec #formulaire pour battre la spécificité de "#formulaire label" (cf. ligne 222). */
+#formulaire .f-h div:has(input[type="radio"]:checked) label{
+    color: #1a2f9e;
+    font-weight: 700;
+    text-shadow: none;
+}
 .f-h input[type="radio"]{
     width: 1.2rem;
     height: 1.2rem;
@@ -686,6 +699,18 @@ footer{
 .btn-n-essaie {
     display: none;
 }
+
+/* Fade-in doux quand JS bascule la section visible (display: flex) — évite le « cliquetis »
+   du passage abrupt accueil → formulaire → questionnaire. */
+#formulaire,
+#questionnaire {
+    animation: fadeInSection 350ms ease-out;
+}
+@keyframes fadeInSection {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 /* ======================== LES IMAGES CLÉS POUR LES ANIMATIONS ========================  */
 
 /* Ce sont les images clés pour la transition d'une page à une autre */
